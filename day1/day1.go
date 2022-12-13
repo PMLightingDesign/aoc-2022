@@ -7,7 +7,7 @@ import (
 	"sort"
 )
 
-const filename string = "day1.txt"
+const filename string = "test.txt"
 
 func check(e error) {
     if e != nil {
