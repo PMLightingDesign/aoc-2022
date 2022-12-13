@@ -13,32 +13,61 @@ func check(e error) {
     }
 }
 
-// A, X Rock, 1
-// B, Y Paper, 2
-// C, Z Scissors, 3
+// A Rock 1
+// B Paper, 2
+// C Scissors 3
 
-// Win = 6
-// Draw = 3
-// Lose = 0
+// Z Win = 6
+// Y Draw = 3
+// X Lose = 0
 
 func play(line string) int {
 	var score int = 0
 
-	enemy := line[0]
-	you := line[2]
+	result := line[2]
+	throw := line[0]
 
-	if (enemy == 'A' && you == 'X') || (enemy == 'B' && you == 'Y') || (enemy == 'C' && you == 'Z') {
-		score += 3
-	} else if (enemy == 'A' && you == 'Y') || (enemy == 'B' && you == 'Z') || (enemy == 'C' && you == 'X') {
-		score += 6
-	}
+	if result == 'Z' {
+		score = 6
+		
+		if(throw == 'A'){
+			// We need paper to win
+			score += 2
+		} else if(throw == 'B'){
+			// We need scissors to win
+			score += 3
+		} else if(throw == 'C'){
+			// We need rock to win
+			score += 1
+		}
 
-	if you == 'X' {
-		score += 1
-	} else if you == 'Y' {
-		score += 2
-	} else if you == 'Z' {
-		score += 3
+	} else if result == 'Y' {
+		score = 3
+
+		if(throw == 'A'){
+			// We need rock to draw
+			score += 1
+		} else if(throw == 'B'){
+			// We need paper to draw
+			score += 2
+		} else if(throw == 'C'){
+			// We need scissors to draw
+			score += 3
+		}
+
+	} else {
+		score = 0
+
+		if(throw == 'A'){
+			// We need scissors to lose
+			score += 3
+		} else if(throw == 'B'){
+			// We need rock to lose
+			score += 1
+		} else if(throw == 'C'){
+			// We need paper to lose
+			score += 2
+		}
 	}
 
 	return score
