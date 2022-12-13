@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"os"
 	"strconv"
+	"sort"
 )
 
 const filename string = "day1.txt"
@@ -39,22 +40,15 @@ func main() {
 		}
 	}
 
-	var max int = 0
-	var max2 int = 0
-	var max3 int = 0
+	// Sort the list of calories
+	sort.Ints(cals)
 
-	for _, val := range cals {
-		if val > max {
-			max3 = max2
-			max2 = max
-			max = val
-		}
+	// Print the top 3
+	var final int = 0
+	for i := 0; i < 3; i++ {
+		final += cals[len(cals)-1-i]
 	}
 
-	println(max)
-	println(max2)
-	println(max3)
-
-	println(max + max2 + max3)
+	println(final)
 	
 }
