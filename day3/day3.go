@@ -19,8 +19,6 @@ func scoreChar(char byte) int {
 	} else {
 		return int(char) - 96
 	}
-
-	return -1
 }
 
 func main() {
@@ -31,26 +29,38 @@ func main() {
 	var total int
 
 	scanner := bufio.NewScanner(f)
+
+	var lines []string
+
 	for scanner.Scan() {
-		var bucket1 [127]bool
-		var bucket2 [127]bool
+		lines = append(lines, scanner.Text())
 
-		tSplit := len(scanner.Text()) / 2
+			if len(lines) >= 3 {
 
-		for i, char := range scanner.Text() {
-			if i < tSplit {
-				bucket1[int(char)] = true
-			} else {
-				bucket2[int(char)] = true
+			var l1, l2, l3 [127]bool
+
+			for i := 0; i < len(lines[0]); i++ {
+				l1[int(lines[0][i])] = true
 			}
-		}
 
-		for i := 0; i < 127; i++ {
-			if bucket1[i] && bucket2[i] {
-				total += scoreChar(byte(i))
+			for i := 0; i < len(lines[1]); i++ {
+				l2[int(lines[1][i])] = true
 			}
-		}
 
+			for i := 0; i < len(lines[2]); i++ {
+				l3[int(lines[2][i])] = true
+			}
+
+			// Check if the same character appears in all three lines
+			for i := 0; i < len(l1); i++ {
+				if l1[i] && l2[i] && l3[i] {
+					total += scoreChar(byte(i))
+				}
+			}
+
+			lines = []string{}
+
+		}
 	}
 
 	println(total)
