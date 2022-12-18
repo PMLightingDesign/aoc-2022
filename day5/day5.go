@@ -8,7 +8,7 @@ import (
 	"fmt"
 )
 
-const filename string = "test.txt"
+const filename string = "input.txt"
 
 func check(e error) {
     if e != nil {
@@ -63,9 +63,9 @@ func moveStack(stack *[][]int, instruction string) {
 	check(err)
 	destination--
 
-	// Move count elements from source to destination which are indexes of the stack
-	(*stack)[destination] = append((*stack)[destination], (*stack)[source][:count]...)
-	(*stack)[source] = (*stack)[source][count:]
+	// Move count elements from the end of the source row to the end of the destination row
+	(*stack)[destination] = append((*stack)[destination], (*stack)[source][len((*stack)[source])-count:]...)
+	(*stack)[source] = (*stack)[source][:len((*stack)[source])-count]
 	
 }
 
@@ -117,5 +117,10 @@ func main() {
 	}
 
 	printStack(stack)
+
+	// Loop through the stack, and print the last element of each row as a character
+	for _, row := range stack {
+		fmt.Printf("%c", row[len(row)-1])
+	}
 
 }
