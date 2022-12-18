@@ -34,6 +34,10 @@ func (r *numRange) contains(r2 numRange) bool {
 	return r.min <= r2.min && r.max >= r2.max
 }
 
+func (r *numRange) overlaps(r2 numRange) bool {
+	return r.min <= r2.min && r.max >= r2.min || r.min <= r2.max && r.max >= r2.max
+}
+
 func checkRow(s string) bool {
 	strings := strings.Split(s, ",")
 
@@ -45,12 +49,12 @@ func checkRow(s string) bool {
 
 	println(r1.min, "-", r1.max, " | ", r2.min, "-", r2.max)
 
-	if r1.contains(r2) || r2.contains(r1) {
-		println("Contained")
+	if r1.overlaps(r2) || r2.overlaps(r1) {
+		println("Overlaps")
 		return true
 	}
 
-	println("Not contained")
+	println("Does not overlap")
 	return false
 }
 
